@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'psico_clinica.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'psicoclinicadb',
+        'NAME': 'psico_clinica',
         'USER': 'root',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
