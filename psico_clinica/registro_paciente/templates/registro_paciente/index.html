@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paciente</title>
+</head>
+<body>
+    {% if latest_patient_list %}
+    <ul>
+    {% for patient in latest_patient_list %}
+        <li><a href="/registro_paciente/{{ patient.id_paciente }}/">{{ patient.nombre }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+</body>
+</html>
