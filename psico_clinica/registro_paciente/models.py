@@ -178,3 +178,53 @@ class TratamientoAnterior(models.Model):
         managed = False
         db_table = 'tratamiento_anterior'
         unique_together = (('id_tratamiento_anterior', 'id_paciente'),)
+
+class Educacion(models.Model):
+    """Educacion del paciente en general"""
+    id_educacion = models.AutoField(primary_key=True)
+    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
+
+    class Meta:
+        managed = False
+        db_table = 'educacion'
+        unique_together = (('id_educacion', 'id_paciente'),)
+
+class EducacionBasica(models.Model):
+    """Educacion baśica del paciente desde parvularia hasta 2do de bachillerato del paciente"""
+    id_educacion_basica = models.AutoField(primary_key=True)
+    id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
+    grado_escolar = models.CharField(max_length=45)
+    institucion = models.CharField(max_length=45)
+
+    class Meta:
+        managed = False
+        db_table = 'educacion_basica'
+        unique_together = (('id_educacion_basica', 'id_educacion'),)
+
+class EducacionSuperior(models.Model):
+    """Educacion superior del paciente"""
+    id_educacion_superior = models.AutoField(primary_key=True)
+    id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
+    id_carrera = models.ForeignKey(Carrera, models.DO_NOTHING, db_column='id_carrera')
+    carnet = models.CharField(max_length=45)
+    ciclo = models.CharField(max_length=45)
+    universidad = models.CharField(max_length=45)
+    finalizada = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'educacion_superior'
+        unique_together = (('id_educacion_superior', 'id_educacion', 'id_carrera'),)
+
+class Grado(models.Model):
+    """Doctorados, master, grados, etc"""
+    id_grado = models.AutoField(primary_key=True)
+    id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
+    nombre_grado = models.CharField(max_length=45)
+    finalizado = models.IntegerField()
+    institucion = models.CharField(max_length=45)
+
+    class Meta:
+        managed = False
+        db_table = 'grado'
+        unique_together = (('id_grado', 'id_educacion'),)
