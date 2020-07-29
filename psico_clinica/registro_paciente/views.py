@@ -13,7 +13,7 @@ def index(request):
 
 def detalle_paciente(request, id_paciente):
     """detale_carrera"""
-    paciente_seleccionado = Paciente.objects.filter(id_paciente=id_paciente)
+    paciente_seleccionado = get_object_or_404(Paciente, id_paciente=id_paciente)
     context = {
         'paciente_seleccionado' : paciente_seleccionado,
     }

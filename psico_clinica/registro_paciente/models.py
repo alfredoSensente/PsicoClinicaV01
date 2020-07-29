@@ -14,7 +14,6 @@ class Localidad(models.Model):
         return self.direccion
 
     class Meta:
-        managed = False
         db_table = 'localidad'
 
 class TipoReligion(models.Model):
@@ -26,7 +25,6 @@ class TipoReligion(models.Model):
         return self.nombre
 
     class Meta:
-        managed = False
         db_table = 'tipo_religion'
 
 class EstadoCivil(models.Model):
@@ -38,7 +36,6 @@ class EstadoCivil(models.Model):
         return self.estado_civil
 
     class Meta:
-        managed = False
         db_table = 'estado_civil'
 
 class Referencia(models.Model):
@@ -50,7 +47,6 @@ class Referencia(models.Model):
         return self.referencia
 
     class Meta:
-        managed = False
         db_table = 'referencia'
 
 class Carrera(models.Model):
@@ -62,7 +58,6 @@ class Carrera(models.Model):
         return self.carrera
 
     class Meta:
-        managed = False
         db_table = 'carrera'
 
 class TipoFamiliar(models.Model):
@@ -74,7 +69,6 @@ class TipoFamiliar(models.Model):
         return self.nombre_tipo
 
     class Meta:
-        managed = False
         db_table = 'tipo_familiar'
 
 class Familiar(models.Model):
@@ -91,13 +85,12 @@ class Familiar(models.Model):
     direccion_trabajo = models.CharField(max_length=255, blank=True, null=True)
     ocupacion = models.CharField(max_length=45, blank=True, null=True)
     dui = models.CharField(max_length=45, blank=True, null=True)
-    responsable = models.IntegerField()
+    responsable = models.BooleanField()
 
     def __str__(self):
         return self.nombre
 
     class Meta:
-        managed = False
         db_table = 'familiar'
         unique_together = (('id_familiar', 'id_paciente', 'id_tipo_familiar'),)
 
@@ -113,7 +106,6 @@ class Congregacion(models.Model):
         return self.nombre_congregacion
 
     class Meta:
-        managed = False
         db_table = 'congregacion'
         unique_together = (('id_congregacion', 'id_tipo_religion'),)
 
@@ -125,7 +117,6 @@ class DatosClinicos(models.Model):
     medicamento = models.CharField(max_length=45)
 
     class Meta:
-        managed = False
         db_table = 'datos_clinicos'
         unique_together = (('id_datos_clinicos', 'id_paciente'),)
 
@@ -147,7 +138,6 @@ class Paciente(models.Model):
         return self.nombre + " " + self.apellido
 
     class Meta:
-        managed = False
         db_table = 'paciente'
         unique_together = (('id_paciente', 'id_localidad', 'id_congregacion', 'id_estado_civil',
                             'id_referencia'),)
@@ -161,7 +151,6 @@ class Trabajo(models.Model):
     cargo = models.CharField(max_length=45)
 
     class Meta:
-        managed = False
         db_table = 'trabajo'
         unique_together = (('id_trabajo', 'id_paciente'),)
 
@@ -171,11 +160,10 @@ class TratamientoAnterior(models.Model):
     id_paciente = models.ForeignKey(Paciente, models.DO_NOTHING, db_column='id_paciente')
     motivo = models.CharField(max_length=255)
     periodo = models.CharField(max_length=45, blank=True, null=True)
-    dado_alta = models.IntegerField()
+    dado_alta = models.BooleanField()
     alta_por_que_no = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'tratamiento_anterior'
         unique_together = (('id_tratamiento_anterior', 'id_paciente'),)
 
@@ -184,8 +172,10 @@ class Educacion(models.Model):
     id_educacion = models.AutoField(primary_key=True)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
 
+    def __str__(self):
+        return str(self.id_educacion)
+
     class Meta:
-        managed = False
         db_table = 'educacion'
         unique_together = (('id_educacion', 'id_paciente'),)
 
@@ -196,8 +186,10 @@ class EducacionBasica(models.Model):
     grado_escolar = models.CharField(max_length=45)
     institucion = models.CharField(max_length=45)
 
+    def __str__(self):
+        return self.institucion
+
     class Meta:
-        managed = False
         db_table = 'educacion_basica'
         unique_together = (('id_educacion_basica', 'id_educacion'),)
 
@@ -209,10 +201,12 @@ class EducacionSuperior(models.Model):
     carnet = models.CharField(max_length=45)
     ciclo = models.CharField(max_length=45)
     universidad = models.CharField(max_length=45)
-    finalizada = models.IntegerField()
+    finalizada = models.BooleanField()
+
+    def __str__(self):
+        return self.universidad
 
     class Meta:
-        managed = False
         db_table = 'educacion_superior'
         unique_together = (('id_educacion_superior', 'id_educacion', 'id_carrera'),)
 
@@ -221,10 +215,12 @@ class Grado(models.Model):
     id_grado = models.AutoField(primary_key=True)
     id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
     nombre_grado = models.CharField(max_length=45)
-    finalizado = models.IntegerField()
+    finalizado = models.BooleanField()
     institucion = models.CharField(max_length=45)
 
+    def __str__(self):
+        return self.nombre_grado
+
     class Meta:
-        managed = False
         db_table = 'grado'
         unique_together = (('id_grado', 'id_educacion'),)

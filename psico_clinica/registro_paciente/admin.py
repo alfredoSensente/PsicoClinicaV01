@@ -12,6 +12,10 @@ from .models import DatosClinicos
 from .models import Paciente
 from .models import Trabajo
 from .models import TratamientoAnterior
+from .models import Educacion
+from .models import EducacionBasica
+from .models import EducacionSuperior
+from .models import Grado
 
 # Register your models here.
 admin.site.register(Localidad)
@@ -26,3 +30,7 @@ admin.site.register(DatosClinicos)
 admin.site.register(Paciente)
 admin.site.register(Trabajo)
 admin.site.register(TratamientoAnterior)
+admin.site.register(Educacion)
+admin.site.register(EducacionBasica)
+admin.site.register(EducacionSuperior)
+admin.site.register(Grado)
