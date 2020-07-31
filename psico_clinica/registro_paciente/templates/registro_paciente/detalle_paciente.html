@@ -6,15 +6,21 @@
     <title>Detalle del paciente</title>
 </head>
 <body>
-    {% if paciente_seleccionado %}
+{% if paciente_seleccionado %}
+    <h2>N° Registro: {{ paciente_seleccionado.id_paciente }}</h2>
     <ul>
-    {% for patient in paciente_seleccionado %}
-        <li>N° Registro: {{ patient.id_paciente }}</li>
-        <li>Nombre: {{ patient.nombre }}</li>
-        <li>Apellido: {{ patient.apellido }}</li>
-        <li>Fecha de nacimiento: {{ patient.fecha_nacimiento }}</li>
-    {% endfor %}
+        <li>Nombre: {{ paciente_seleccionado.nombre }}</li>
+        <li>Apellido: {{ paciente_seleccionado.apellido }}</li>
+        <li>Fecha de nacimiento: {{ paciente_seleccionado.fecha_nacimiento }}</li>
     </ul>
+    
+    {% for family in paciente_seleccionado.familiar_set.all %}
+    <h3>{{ family.id_tipo_familiar }}</h3>
+    <ul>
+        <li>{{ family.nombre }}</li>
+        <li>{{ family.fecha_nacimiento }}</li>
+    </ul>
+    {% endfor %}
 {% else %}
     <p>No polls are available.</p>
 {% endif %}

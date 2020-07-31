@@ -3,17 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'registro_paciente/css/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'registro_paciente/css/styles.css'">
     <title>Paciente</title>
 </head>
 <body>
-    {% if latest_patient_list %}
-    <ul>
-    {% for patient in latest_patient_list %}
-        <li><a href="/registro_paciente/{{ patient.id_paciente }}/">{{ patient.nombre }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Clinica Psicologica</a>
+            
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" tabindex="-1" aria-disabled="true">Citas <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item diseabled">
+                    <a class="nav-link" href="#">Pacientes</a>
+                </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid margin-top">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Tabla de Citas</h2>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Fecha Nacimiento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% if latest_patient_list %}
+                            {% for patient in latest_patient_list %}
+                            <tr>
+                                <th><a href="/registro_paciente/{{ patient.id_paciente }}/">{{ patient.id_paciente }}</a></th>
+                                <td>{{ patient.nombre }}</td>
+                                <td>{{ patient.apellido }}</td>
+                                <td>{{ patient.fecha_nacimiento }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <p>No polls are available.</p>
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <form>
+                    <h2>Form</h2>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="form-group form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
