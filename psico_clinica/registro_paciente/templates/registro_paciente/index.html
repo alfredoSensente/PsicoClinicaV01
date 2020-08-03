@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load staticfiles %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'registro_paciente/css/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'registro_paciente/css/styles.css'">
+    <link rel="stylesheet" type="text/css" href="{% static 'registro_paciente/css/styles.css' %}">
     <title>Paciente</title>
 </head>
 <body>
@@ -34,7 +34,7 @@
     <div class="container-fluid margin-top">
         <div class="row">
             <div class="col-md-8">
-                <h2>Tabla de Citas</h2>
+                <h2>Pacientes Registrados</h2>
                 <table class="table">
                     <thead>
                       <tr>
@@ -48,7 +48,7 @@
                         {% if latest_patient_list %}
                             {% for patient in latest_patient_list %}
                             <tr>
-                                <th><a href="/registro_paciente/{{ patient.id_paciente }}/">{{ patient.id_paciente }}</a></th>
+                                <th><a href="{% url 'registro_paciente:detalle_paciente' patient.id_paciente %}">{{ patient.id_paciente }}</a></th>
                                 <td>{{ patient.nombre }}</td>
                                 <td>{{ patient.apellido }}</td>
                                 <td>{{ patient.fecha_nacimiento }}</td>
