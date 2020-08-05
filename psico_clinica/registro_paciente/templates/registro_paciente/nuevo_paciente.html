@@ -57,6 +57,87 @@
                     </div>
                 </div>
             </div>
+            <!-- Localidad -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="id_direccion">Direccion:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="custom-select" id="id_direccion">
+                            <option selected>Elige</option>
+                            {% if lista_localidad %}
+                            {% for direccion in lista_localidad %}
+                            <option name="localidad" value="direccion.id_localidad" id="localidad{{forloop.counter}}">{{direccion.direccion}}</option>
+                            {% endfor %}
+                            {% else%}
+                            <option selected>Sin Resultados</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Congregacion -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="id_congregacion">Congregacion:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="custom-select" id="id_congregacion">
+                            <option selected>Elige</option>
+                            {% if lista_congregacion %}
+                            {% for congregacion in lista_congregacion %}
+                            <option name="congregacion" value="congregacion.id_congregacion" id="congregacion{{forloop.counter}}">{{congregacion.nombre_congregacion}}</option>
+                            {% endfor %}
+                            {% else%}
+                            <option selected>Sin Resultados</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Estado Civil -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="id_estado_civil">Estado Civil:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="custom-select" id="id_estado_civil">
+                            <option selected>Elige</option>
+                            {% if lista_estado_civil %}
+                            {% for e_civil in lista_estado_civil %}
+                            <option name="estado_civil" value="e_civil.id_estado_civil" id="estado_civil_{{forloop.counter}}">{{e_civil.estado_civil}}</option>
+                            {% endfor %}
+                            {% else%}
+                            <option selected>Sin Resultados</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Referencia -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="id_referencia">Referencia:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="custom-select" id="id_referencia">
+                            <option selected>Elige</option>
+                            {% if lista_referencia %}
+                            {% for referencia in lista_referencia %}
+                            <option name="referencia" value="referencia.id_referencia" id="referencia{{forloop.counter}}">{{referencia.referencia}}</option>
+                            {% endfor %}
+                            {% else%}
+                            <option selected>Sin Resultados</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>
 {% endblock %}

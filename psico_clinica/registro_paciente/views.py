@@ -1,6 +1,6 @@
 """vistas"""
 from django.shortcuts import render, get_object_or_404
-from .models import Paciente
+from .models import Paciente, Localidad, Congregacion, Referencia, EstadoCivil
 
 # Create your views here.
 def index(request):
@@ -21,4 +21,14 @@ def detalle_paciente(request, id_paciente):
 
 def nuevo_paciente(request):
     """Registra un nuevo paciente"""
-    return render(request, 'registro_paciente/nuevo_paciente.html')
+    lista_localidad = Localidad.objects.all()
+    lista_congregacion = Congregacion.objects.all()
+    lista_estado_civil = EstadoCivil.objects.all()
+    lista_referencia = Referencia.objects.all()
+    context = {
+        'lista_localidad' : lista_localidad,
+        'lista_congregacion' : lista_congregacion,
+        'lista_estado_civil' : lista_estado_civil,
+        'lista_referencia' : lista_referencia,
+    }
+    return render(request, 'registro_paciente/nuevo_paciente.html', context)
