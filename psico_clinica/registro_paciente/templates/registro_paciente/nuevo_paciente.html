@@ -1,0 +1,62 @@
+{% extends 'registro_paciente/layout_base.html' %}
+{% block title %}Nuevo Paciente{% endblock %}
+{% block body %}
+    <div class="container margin-top">
+        <form action="">
+            <!-- titlulo del form -->
+            <div class="form-group">
+                <h1>Agregar nuevo paciente</h1>
+            </div>
+            <!-- Nombre Completo -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="">Nombre Completo:</label>
+                    </div>
+                    <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Nombres">
+                    </div>
+                    <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Apellidos">
+                    </div>
+                </div>
+            </div>
+            <!-- Fecha de nacimiento -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="">Fecha de Nacimiento:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" placeholder="Fecha">
+                    </div>
+                </div>
+            </div>
+            <!-- Sexo -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="inputGroupSelect01">Sexo:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected value="1">Hombre</option>
+                            <option value="2">Mujer</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Telefono -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="">Telefono Movil:</label>
+                    </div>
+                    <div class="col-md-3">
+                    <input type="number" class="form-control" placeholder="########">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

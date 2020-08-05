@@ -18,3 +18,7 @@ def detalle_paciente(request, id_paciente):
         'paciente_seleccionado' : paciente_seleccionado,
     }
     return render(request, 'registro_paciente/detalle_paciente.html', context)
+
+def nuevo_paciente(request):
+    """Registra un nuevo paciente"""
+    return render(request, 'registro_paciente/nuevo_paciente.html')

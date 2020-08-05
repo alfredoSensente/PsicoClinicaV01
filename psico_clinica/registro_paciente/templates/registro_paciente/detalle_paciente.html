@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'registro_paciente/css/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'registro_paciente/css/styles.css' %}">
-    <title>Detalle del paciente</title>
-</head>
-<body>
+{% extends 'registro_paciente/layout_base.html' %}
+{% block title %}Detalle del paciente{% endblock %}
+{% block body %}
+<div class="container-fluid">
 {% if paciente_seleccionado %}
     <h2>N° Registro: {{ paciente_seleccionado.id_paciente }}</h2>
     <ul>
@@ -27,5 +20,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
-</body>
-</html>
+</div>
+{% endblock %}
