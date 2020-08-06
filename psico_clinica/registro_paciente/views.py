@@ -1,5 +1,6 @@
 """vistas"""
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.urls import reverse
 from .models import Paciente, Localidad, Congregacion, Referencia, EstadoCivil
 
 # Create your views here.
@@ -32,3 +33,39 @@ def nuevo_paciente(request):
         'lista_referencia' : lista_referencia,
     }
     return render(request, 'registro_paciente/nuevo_paciente.html', context)
+
+def agregar(request):
+    """Agregar"""
+    try:
+        referencia_seleccionada = get_object_or_404(Referencia,
+                                                    id_referencia=request.POST['referencia'])
+        localidad_seleccionada = get_object_or_404(Localidad,
+                                                   id_localidad=request.POST['localidad'])
+        e_civil_seleccionada = get_object_or_404(EstadoCivil,
+                                                 id_estado_civil=request.POST['estado_civil'])
+        congregacion_seleccionada = get_object_or_404(Congregacion,
+                                                      id_congregacion=request.POST['congregacion'])
+    except (KeyError, Referencia.DoesNotExist, Localidad.DoesNotExist, EstadoCivil.DoesNotExist,
+            Congregacion.DoesNotExist):
+        context_error = {
+            'error_message': "Error: No has llenado un campo obligatorio.",
+        }
+        return render(request, 'registro_paciente/nuevo_paciente.html', context_error)
+    else:
+        nombre = request.POST['nombre']
+        apellido = request.POST['apellido']
+        telefono_movil = request.POST['telefono_movil']
+        fecha_nacimiento = request.POST['fecha_nacimiento']
+        sexo = request.POST['sexo']
+
+        nuevo_paciente = Paciente(nombre=nombre,
+                                  apellido=apellido,
+                                  fecha_nacimiento=fecha_nacimiento,
+                                  sexo=sexo,
+                                  telefono_movil=telefono_movil,
+                                  id_localidad=localidad_seleccionada,
+                                  id_congregacion=congregacion_seleccionada,
+                                  id_estado_civil=e_civil_seleccionada,
+                                  id_referencia=referencia_seleccionada)
+        nuevo_paciente.save()
+        return HttpResponseRedirect(reverse('registro_paciente:index'))
