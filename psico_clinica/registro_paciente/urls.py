@@ -5,8 +5,8 @@ from . import views
 
 app_name='registro_paciente'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<int:id_paciente>/', views.detalle_paciente, name='detalle_paciente'),
+    path('', views.IndexView.as_view(), name='index'),
+    path('<int:pk>/', views.PatientDetailView.as_view(), name='detalle_paciente'),
     path('nuevo_paciente/', views.nuevo_paciente, name='nuevo_paciente'),
     path('agregar/', views.agregar, name='agregar'),
 ]

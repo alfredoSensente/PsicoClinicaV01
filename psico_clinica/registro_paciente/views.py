@@ -1,24 +1,23 @@
 """vistas"""
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
 from .models import Paciente, Localidad, Congregacion, Referencia, EstadoCivil
 
 # Create your views here.
-def index(request):
-    """prueba"""
-    latest_patient_list = Paciente.objects.all()[:5]
-    context = {
-        'latest_patient_list' : latest_patient_list,
-    }
-    return render(request, 'registro_paciente/index.html', context)
+class IndexView(generic.ListView):
+    """Vista Generica ListView"""
+    model = Paciente
+    context_object_name = 'latest_patient_list'
+    template_name = 'registro_paciente/index.html'
+    def get_queryset(self):
+        return Paciente.objects.all()[:10]
 
-def detalle_paciente(request, id_paciente):
-    """detale_carrera"""
-    paciente_seleccionado = get_object_or_404(Paciente, id_paciente=id_paciente)
-    context = {
-        'paciente_seleccionado' : paciente_seleccionado,
-    }
-    return render(request, 'registro_paciente/detalle_paciente.html', context)
+class PatientDetailView(generic.DetailView):
+    """Vista generica detalle_paciente"""
+    model = Paciente
+    context_object_name = 'paciente_seleccionado'
+    template_name = 'registro_paciente/detalle_paciente.html'
 
 def nuevo_paciente(request):
     """Registra un nuevo paciente"""
