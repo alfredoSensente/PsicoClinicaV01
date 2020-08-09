@@ -3,11 +3,11 @@
 {% block body %}
     <div class="container margin-top">
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <form action="{% url 'registro_paciente:agregar' %}" method="POST">
+        <form method="POST">
             {% csrf_token %}
             <!-- titlulo del form -->
             <div class="form-group">
-                <h1>Agregar nuevo paciente</h1>
+                <h1>Agregar o Editar paciente</h1>
             </div>
             <!-- Nombre Completo -->
             <div class="form-group">
@@ -16,10 +16,10 @@
                         <label for="">Nombre Completo:</label>
                     </div>
                     <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Nombres" name="nombre">
+                    {{ form.nombre }}
                     </div>
                     <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Apellidos" name="apellido">
+                    {{form.apellido}}
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <label for="">Fecha de Nacimiento:</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="date" class="form-control" placeholder="Fecha" name="fecha_nacimiento">
+                        {{ form.fecha_nacimiento }}
                     </div>
                 </div>
             </div>
@@ -41,10 +41,7 @@
                         <label for="inputGroupSelect01">Sexo:</label>
                     </div>
                     <div class="col-md-3">
-                        <select class="custom-select" id="inputGroupSelect01" name="sexo">
-                            <option selected value="Hombre">Hombre</option>
-                            <option value="Mujer">Mujer</option>
-                        </select>
+                        {{form.id_sexo}}
                     </div>
                 </div>
             </div>
@@ -55,7 +52,7 @@
                         <label for="">Telefono Movil:</label>
                     </div>
                     <div class="col-md-3">
-                    <input type="number" class="form-control" name="telefono_movil" placeholder="########">
+                        {{ form.telefono_movil }}
                     </div>
                 </div>
             </div>
@@ -66,16 +63,7 @@
                         <label for="id_direccion">Direccion:</label>
                     </div>
                     <div class="col-md-6">
-                        <select class="custom-select" id="id_direccion" name="localidad">
-                            <option selected>Elija</option>
-                            {% if lista_localidad %}
-                            {% for direccion in lista_localidad %}
-                            <option value="{{direccion.id_localidad}}" id="localidad{{forloop.counter}}">{{direccion.direccion}}</option>
-                            {% endfor %}
-                            {% else%}
-                            <option selected>Sin Resultados</option>
-                            {% endif %}
-                        </select>
+                        {{form.id_localidad}}
                     </div>
                 </div>
             </div>
@@ -86,16 +74,7 @@
                         <label for="id_congregacion">Congregacion:</label>
                     </div>
                     <div class="col-md-3">
-                        <select class="custom-select" id="id_congregacion" name="congregacion">
-                            <option selected>Elige</option>
-                            {% if lista_congregacion %}
-                            {% for congregacion in lista_congregacion %}
-                            <option value="{{congregacion.id_congregacion}}" id="congregacion{{forloop.counter}}">{{congregacion.nombre_congregacion}}</option>
-                            {% endfor %}
-                            {% else%}
-                            <option selected>Sin Resultados</option>
-                            {% endif %}
-                        </select>
+                        {{ form.id_congregacion }}
                     </div>
                 </div>
             </div>
@@ -106,16 +85,7 @@
                         <label for="id_estado_civil">Estado Civil:</label>
                     </div>
                     <div class="col-md-3">
-                        <select class="custom-select" id="id_estado_civil" name="estado_civil">
-                            <option selected>Elige</option>
-                            {% if lista_estado_civil %}
-                            {% for e_civil in lista_estado_civil %}
-                            <option value="{{e_civil.id_estado_civil}}" id="estado_civil_{{forloop.counter}}">{{e_civil.estado_civil}}</option>
-                            {% endfor %}
-                            {% else%}
-                            <option selected>Sin Resultados</option>
-                            {% endif %}
-                        </select>
+                        {{ form.id_estado_civil }}
                     </div>
                 </div>
             </div>
@@ -126,16 +96,7 @@
                         <label for="id_referencia">Referencia:</label>
                     </div>
                     <div class="col-md-3">
-                        <select class="custom-select" id="id_referencia" name="referencia">
-                            <option selected>Elige</option>
-                            {% if lista_referencia %}
-                            {% for referencia in lista_referencia %}
-                            <option value="{{referencia.id_referencia}}" id="referencia{{forloop.counter}}">{{referencia.referencia}}</option>
-                            {% endfor %}
-                            {% else%}
-                            <option selected>Sin Resultados</option>
-                            {% endif %}
-                        </select>
+                        {{ form.id_referencia }}
                     </div>
                 </div>
             </div>

@@ -7,6 +7,6 @@ app_name='registro_paciente'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('<int:pk>/', views.PatientDetailView.as_view(), name='detalle_paciente'),
-    path('nuevo_paciente/', views.nuevo_paciente, name='nuevo_paciente'),
-    path('agregar/', views.agregar, name='agregar'),
+    path('nuevo_paciente/', views.PacienteCreate.as_view(), name='nuevo_paciente'),
+    path('editar_paciente/<int:pk>/', views.PacienteUpdate.as_view(), name='editar_paciente'),
 ]

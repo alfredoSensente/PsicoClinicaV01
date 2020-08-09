@@ -1,8 +1,9 @@
 """vistas"""
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
+from django.urls import reverse, reverse_lazy
 from django.views import generic
-from .models import Paciente, Localidad, Congregacion, Referencia, EstadoCivil
+from .models import Paciente
+from .forms import PatientForm
 
 # Create your views here.
 class IndexView(generic.ListView):
@@ -19,52 +20,16 @@ class PatientDetailView(generic.DetailView):
     context_object_name = 'paciente_seleccionado'
     template_name = 'registro_paciente/detalle_paciente.html'
 
-def nuevo_paciente(request):
-    """Registra un nuevo paciente"""
-    lista_localidad = Localidad.objects.all()
-    lista_congregacion = Congregacion.objects.all()
-    lista_estado_civil = EstadoCivil.objects.all()
-    lista_referencia = Referencia.objects.all()
-    context = {
-        'lista_localidad' : lista_localidad,
-        'lista_congregacion' : lista_congregacion,
-        'lista_estado_civil' : lista_estado_civil,
-        'lista_referencia' : lista_referencia,
-    }
-    return render(request, 'registro_paciente/nuevo_paciente.html', context)
+class PacienteCreate(generic.CreateView):
+    """Crear un nuevo paciente"""
+    model = Paciente
+    form_class = PatientForm
+    template_name = 'registro_paciente/nuevo_paciente.html'
+    success_url = reverse_lazy('registro_paciente:index')
 
-def agregar(request):
-    """Agregar"""
-    try:
-        referencia_seleccionada = get_object_or_404(Referencia,
-                                                    id_referencia=request.POST['referencia'])
-        localidad_seleccionada = get_object_or_404(Localidad,
-                                                   id_localidad=request.POST['localidad'])
-        e_civil_seleccionada = get_object_or_404(EstadoCivil,
-                                                 id_estado_civil=request.POST['estado_civil'])
-        congregacion_seleccionada = get_object_or_404(Congregacion,
-                                                      id_congregacion=request.POST['congregacion'])
-    except (KeyError, Referencia.DoesNotExist, Localidad.DoesNotExist, EstadoCivil.DoesNotExist,
-            Congregacion.DoesNotExist):
-        context_error = {
-            'error_message': "Error: No has llenado un campo obligatorio.",
-        }
-        return render(request, 'registro_paciente/nuevo_paciente.html', context_error)
-    else:
-        nombre = request.POST['nombre']
-        apellido = request.POST['apellido']
-        telefono_movil = request.POST['telefono_movil']
-        fecha_nacimiento = request.POST['fecha_nacimiento']
-        sexo = request.POST['sexo']
-
-        nuevo_paciente = Paciente(nombre=nombre,
-                                  apellido=apellido,
-                                  fecha_nacimiento=fecha_nacimiento,
-                                  sexo=sexo,
-                                  telefono_movil=telefono_movil,
-                                  id_localidad=localidad_seleccionada,
-                                  id_congregacion=congregacion_seleccionada,
-                                  id_estado_civil=e_civil_seleccionada,
-                                  id_referencia=referencia_seleccionada)
-        nuevo_paciente.save()
-        return HttpResponseRedirect(reverse('registro_paciente:index'))
+class PacienteUpdate(generic.UpdateView):
+    """Actualiza el registro de un paciente"""
+    model = Paciente
+    form_class = PatientForm
+    template_name = 'registro_paciente/nuevo_paciente.html'
+    success_url = reverse_lazy('registro_paciente:index')

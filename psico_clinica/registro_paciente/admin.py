@@ -16,6 +16,7 @@ from .models import Educacion
 from .models import EducacionBasica
 from .models import EducacionSuperior
 from .models import Grado
+from .models import Sexo
 
 # Register your models here.
 admin.site.register(Localidad)
@@ -34,3 +35,4 @@ admin.site.register(Educacion)
 admin.site.register(EducacionBasica)
 admin.site.register(EducacionSuperior)
 admin.site.register(Grado)
+admin.site.register(Sexo)

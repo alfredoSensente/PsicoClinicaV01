@@ -120,19 +120,30 @@ class DatosClinicos(models.Model):
         db_table = 'datos_clinicos'
         unique_together = (('id_datos_clinicos', 'id_paciente'),)
 
+class Sexo(models.Model):
+    """Sexo"""
+    id_sexo = models.AutoField(primary_key=True)
+    sexo = models.CharField(max_length=45)
+
+    def __str__(self):
+        return self.sexo
+
+    class Meta:
+        db_table = 'sexo'
+
 class Paciente(models.Model):
     """paciente"""
     id_paciente = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45)
     apellido = models.CharField(max_length=45)
     fecha_nacimiento = models.DateField()
-    sexo = models.CharField(max_length=45)
     telefono_movil = models.CharField(max_length=45, blank=True, null=True)
     id_localidad = models.ForeignKey(Localidad, models.DO_NOTHING, db_column='id_localidad')
     id_congregacion = models.ForeignKey(Congregacion, models.DO_NOTHING,
                                         db_column='id_congregacion')
     id_estado_civil = models.ForeignKey(EstadoCivil, models.DO_NOTHING, db_column='id_estado_civil')
     id_referencia = models.ForeignKey('Referencia', models.DO_NOTHING, db_column='id_referencia')
+    id_sexo = models.ForeignKey(Sexo, models.DO_NOTHING, db_column='id_sexo')
 
     def __str__(self):
         return self.nombre + " " + self.apellido
@@ -140,7 +151,7 @@ class Paciente(models.Model):
     class Meta:
         db_table = 'paciente'
         unique_together = (('id_paciente', 'id_localidad', 'id_congregacion', 'id_estado_civil',
-                            'id_referencia'),)
+                            'id_referencia', 'id_sexo'),)
 
 class Trabajo(models.Model):
     """trabajo"""
