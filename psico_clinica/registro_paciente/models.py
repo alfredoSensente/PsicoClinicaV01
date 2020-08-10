@@ -74,9 +74,9 @@ class TipoFamiliar(models.Model):
 class Familiar(models.Model):
     """familiar"""
     id_familiar = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='id_paciente')
     id_tipo_familiar = models.ForeignKey('TipoFamiliar',
-                                         models.DO_NOTHING, db_column='id_tipo_familiar')
+                                         on_delete=models.CASCADE, db_column='id_tipo_familiar')
     telefono_movil = models.CharField(max_length=45, blank=True, null=True)
     nombre = models.CharField(max_length=45)
     fecha_nacimiento = models.DateField(blank=True, null=True)
@@ -100,7 +100,7 @@ class Congregacion(models.Model):
     nombre_congregacion = models.CharField(max_length=45)
     congregacion_direccion = models.CharField(max_length=255, blank=True, null=True)
     id_tipo_religion = models.ForeignKey('TipoReligion',
-                                         models.DO_NOTHING, db_column='id_tipo_religion')
+                                         on_delete=models.CASCADE, db_column='id_tipo_religion')
 
     def __str__(self):
         return self.nombre_congregacion
@@ -112,7 +112,7 @@ class Congregacion(models.Model):
 class DatosClinicos(models.Model):
     """Datos Clincos"""
     id_datos_clinicos = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='id_paciente')
     nombre_enfermedad = models.CharField(max_length=45)
     medicamento = models.CharField(max_length=45)
 
@@ -138,12 +138,12 @@ class Paciente(models.Model):
     apellido = models.CharField(max_length=45)
     fecha_nacimiento = models.DateField()
     telefono_movil = models.CharField(max_length=45, blank=True, null=True)
-    id_localidad = models.ForeignKey(Localidad, models.DO_NOTHING, db_column='id_localidad')
-    id_congregacion = models.ForeignKey(Congregacion, models.DO_NOTHING,
+    id_localidad = models.ForeignKey(Localidad, db_column='id_localidad', on_delete=models.CASCADE)
+    id_congregacion = models.ForeignKey(Congregacion, on_delete=models.CASCADE,
                                         db_column='id_congregacion')
-    id_estado_civil = models.ForeignKey(EstadoCivil, models.DO_NOTHING, db_column='id_estado_civil')
-    id_referencia = models.ForeignKey('Referencia', models.DO_NOTHING, db_column='id_referencia')
-    id_sexo = models.ForeignKey(Sexo, models.DO_NOTHING, db_column='id_sexo')
+    id_estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE, db_column='id_estado_civil')
+    id_referencia = models.ForeignKey('Referencia', on_delete=models.CASCADE, db_column='id_referencia')
+    id_sexo = models.ForeignKey(Sexo, on_delete=models.CASCADE, db_column='id_sexo')
 
     def __str__(self):
         return self.nombre + " " + self.apellido
@@ -156,7 +156,7 @@ class Paciente(models.Model):
 class Trabajo(models.Model):
     """trabajo"""
     id_trabajo = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey(Paciente, models.DO_NOTHING, db_column='id_paciente')
+    id_paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column='id_paciente')
     institucion = models.CharField(max_length=45)
     hace_cuanto_trabajas_ahí = models.CharField(max_length=45)
     cargo = models.CharField(max_length=45)
@@ -168,7 +168,7 @@ class Trabajo(models.Model):
 class TratamientoAnterior(models.Model):
     """Tratamiento Anterior"""
     id_tratamiento_anterior = models.IntegerField(primary_key=True)
-    id_paciente = models.ForeignKey(Paciente, models.DO_NOTHING, db_column='id_paciente')
+    id_paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column='id_paciente')
     motivo = models.CharField(max_length=255)
     periodo = models.CharField(max_length=45, blank=True, null=True)
     dado_alta = models.BooleanField()
@@ -181,7 +181,7 @@ class TratamientoAnterior(models.Model):
 class Educacion(models.Model):
     """Educacion del paciente en general"""
     id_educacion = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='id_paciente')
 
     def __str__(self):
         return str(self.id_educacion)
@@ -193,7 +193,7 @@ class Educacion(models.Model):
 class EducacionBasica(models.Model):
     """Educacion baśica del paciente desde parvularia hasta 2do de bachillerato del paciente"""
     id_educacion_basica = models.AutoField(primary_key=True)
-    id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
+    id_educacion = models.ForeignKey(Educacion, on_delete=models.CASCADE, db_column='id_educacion')
     grado_escolar = models.CharField(max_length=45)
     institucion = models.CharField(max_length=45)
 
@@ -207,8 +207,8 @@ class EducacionBasica(models.Model):
 class EducacionSuperior(models.Model):
     """Educacion superior del paciente"""
     id_educacion_superior = models.AutoField(primary_key=True)
-    id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
-    id_carrera = models.ForeignKey(Carrera, models.DO_NOTHING, db_column='id_carrera')
+    id_educacion = models.ForeignKey(Educacion, on_delete=models.CASCADE, db_column='id_educacion')
+    id_carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, db_column='id_carrera')
     carnet = models.CharField(max_length=45)
     ciclo = models.CharField(max_length=45)
     universidad = models.CharField(max_length=45)
@@ -224,7 +224,7 @@ class EducacionSuperior(models.Model):
 class Grado(models.Model):
     """Doctorados, master, grados, etc"""
     id_grado = models.AutoField(primary_key=True)
-    id_educacion = models.ForeignKey(Educacion, models.DO_NOTHING, db_column='id_educacion')
+    id_educacion = models.ForeignKey(Educacion, on_delete=models.CASCADE, db_column='id_educacion')
     nombre_grado = models.CharField(max_length=45)
     finalizado = models.BooleanField()
     institucion = models.CharField(max_length=45)

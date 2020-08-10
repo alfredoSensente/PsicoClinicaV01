@@ -33,3 +33,10 @@ class PacienteUpdate(generic.UpdateView):
     form_class = PatientForm
     template_name = 'registro_paciente/nuevo_paciente.html'
     success_url = reverse_lazy('registro_paciente:index')
+
+class PacienteDelete(generic.DeleteView):
+    """Borra un paciente"""
+    model = Paciente
+    context_object_name = 'paciente_seleccionado'
+    template_name = 'registro_paciente/borrar_paciente.html'
+    success_url = reverse_lazy('registro_paciente:index')

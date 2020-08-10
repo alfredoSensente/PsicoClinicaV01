@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:pk>/', views.PatientDetailView.as_view(), name='detalle_paciente'),
     path('nuevo_paciente/', views.PacienteCreate.as_view(), name='nuevo_paciente'),
     path('editar_paciente/<int:pk>/', views.PacienteUpdate.as_view(), name='editar_paciente'),
+    path('borrar_paciente/<int:pk>/', views.PacienteDelete.as_view(), name='borrar_paciente'),
 ]

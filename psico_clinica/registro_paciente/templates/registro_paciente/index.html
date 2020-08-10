@@ -26,6 +26,7 @@
                                 <td>{{ patient.fecha_nacimiento }}</td>
                                 <td><a href="{% url 'registro_paciente:detalle_paciente' patient.id_paciente %}"><img src="{% static 'registro_paciente/icons/info-circle.svg' %}" alt="My image" width="30px"></a>
                                     <a href="{% url 'registro_paciente:editar_paciente' patient.id_paciente %}"><img src="{% static 'registro_paciente/icons/pencil-square.svg' %}" alt="My image" width="30px"></a>
+                                    <a href="{% url 'registro_paciente:borrar_paciente' patient.id_paciente %}"><img src="{% static 'registro_paciente/icons/trash.svg' %}" alt="My image" width="30px"></a>
                                 </td>
                             </tr>
                             {% endfor %}
