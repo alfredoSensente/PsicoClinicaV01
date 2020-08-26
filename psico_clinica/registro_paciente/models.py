@@ -1,4 +1,6 @@
 """modelos"""
+import datetime
+from dateutil.relativedelta import relativedelta
 from django.db import models
 
 # Create your models here.
@@ -141,12 +143,25 @@ class Paciente(models.Model):
     id_localidad = models.ForeignKey(Localidad, db_column='id_localidad', on_delete=models.CASCADE)
     id_congregacion = models.ForeignKey(Congregacion, on_delete=models.CASCADE,
                                         db_column='id_congregacion')
-    id_estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE, db_column='id_estado_civil')
-    id_referencia = models.ForeignKey('Referencia', on_delete=models.CASCADE, db_column='id_referencia')
+    id_estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE,
+                                        db_column='id_estado_civil')
+    id_referencia = models.ForeignKey('Referencia', on_delete=models.CASCADE,
+                                      db_column='id_referencia')
     id_sexo = models.ForeignKey(Sexo, on_delete=models.CASCADE, db_column='id_sexo')
 
     def __str__(self):
         return self.nombre + " " + self.apellido
+
+    def fecha_valida(self):
+        """Devuelve false si la fecha esta en el futuro"""
+        return self.fecha_nacimiento <= datetime.datetime.now().date()
+
+    def menor_edad(self):
+        """Devuelve true si la fecha fue antes de hace 18 años"""
+        if self.fecha_valida():
+            return self.fecha_nacimiento >= datetime.datetime.now().date() - relativedelta(years=18)
+        else:
+            return False
 
     class Meta:
         db_table = 'paciente'

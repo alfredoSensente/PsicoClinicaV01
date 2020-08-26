@@ -19,7 +19,7 @@ class PatientForm(forms.ModelForm):
             'id_estado_civil',
             'id_referencia',
         ]
-        labes = {
+        labels = {
             'nombre':'Nombres',
             'apellido':'Apellidos',
             'fecha_nacimiento':'Fecha de nacimiento',
