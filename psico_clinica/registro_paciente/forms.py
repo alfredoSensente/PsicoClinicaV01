@@ -1,8 +1,11 @@
 """Formularios"""
+import datetime
+from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 from django import forms
 from .models import Paciente
 
-class PatientForm(forms.ModelForm):
+class PacienteForm(forms.ModelForm):
     """Formulario para agregar un nuevo paciente"""
     class Meta:
         """Especificaciones"""
@@ -58,3 +61,13 @@ class PatientForm(forms.ModelForm):
             'id_referencia':forms.Select(attrs={'class':'custom-select',
                                                 'name':'referencia'}),
         }
+
+    def clean_fecha_nacimiento(self):
+        """Devuelve false si la fecha esta en el futuro"""
+        cleaned_data = super().clean()
+        f_nac = cleaned_data.get("fecha_nacimiento")
+
+        if f_nac > datetime.datetime.now().date():
+            raise ValidationError(_('La fecha no debe estar en el futuro'),
+                                  code='invalid',)
+        return f_nac
