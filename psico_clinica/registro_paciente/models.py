@@ -152,16 +152,9 @@ class Paciente(models.Model):
     def __str__(self):
         return self.nombre + " " + self.apellido
 
-    def fecha_valida(self):
-        """Devuelve false si la fecha esta en el futuro"""
-        return self.fecha_nacimiento <= datetime.datetime.now().date()
-
     def menor_edad(self):
         """Devuelve true si la fecha fue antes de hace 18 años"""
-        if self.fecha_valida():
-            return self.fecha_nacimiento >= datetime.datetime.now().date() - relativedelta(years=18)
-        else:
-            return False
+        return self.fecha_nacimiento >= datetime.datetime.now().date() - relativedelta(years=18)
 
     class Meta:
         db_table = 'paciente'

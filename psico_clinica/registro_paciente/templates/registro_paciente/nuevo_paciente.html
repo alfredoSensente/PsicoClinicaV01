@@ -1,7 +1,7 @@
 {% extends 'registro_paciente/layout_base.html' %}
 {% block title %}Nuevo Paciente{% endblock %}
 {% block body %}
-    <div class="container margin-top">
+    <div class="container margen-arriba">
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         <form method="POST">
             {% csrf_token %}
@@ -11,7 +11,7 @@
             </div>
             <!-- Nombre Completo -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="">Nombre Completo:</label>
                     </div>
@@ -25,18 +25,23 @@
             </div>
             <!-- Fecha de nacimiento -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="">Fecha de Nacimiento:</label>
                     </div>
                     <div class="col-md-3">
                         {{ form.fecha_nacimiento }}
                     </div>
+                    {% if error_date %}
+                    <small id="passwordHelpInline" class="letra-roja">
+                        <strong>{{error_date}}</strong>
+                    </small>
+                    {% endif %}
                 </div>
             </div>
             <!-- Sexo -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="inputGroupSelect01">Sexo:</label>
                     </div>
@@ -47,7 +52,7 @@
             </div>
             <!-- Telefono -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="">Telefono Movil:</label>
                     </div>
@@ -58,7 +63,7 @@
             </div>
             <!-- Localidad -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="id_direccion">Direccion:</label>
                     </div>
@@ -69,7 +74,7 @@
             </div>
             <!-- Congregacion -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="id_congregacion">Congregacion:</label>
                     </div>
@@ -80,7 +85,7 @@
             </div>
             <!-- Estado Civil -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="id_estado_civil">Estado Civil:</label>
                     </div>
@@ -91,7 +96,7 @@
             </div>
             <!-- Referencia -->
             <div class="form-group">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-md-2">
                         <label for="id_referencia">Referencia:</label>
                     </div>
