@@ -8,11 +8,12 @@ from .forms import PacienteForm
 # Create your views here.
 class IndexView(generic.ListView):
     """Vista Generica ListView"""
+    paginate_by = 5
     model = Paciente
     context_object_name = 'latest_patient_list'
     template_name = 'registro_paciente/index.html'
     def get_queryset(self):
-        return Paciente.objects.all()[:5]
+        return Paciente.objects.all()
 
 
 class PatientDetailView(generic.DetailView):
