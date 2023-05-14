@@ -38,18 +38,21 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-REST_FRAMEWORK_APPS = [
+
+ANOTHER_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 LOCAL_APPS =[
     'users.apps.UsersConfig',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + REST_FRAMEWORK_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + ANOTHER_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS
+CORS_ORIGIN_ALLOW_ALL = True
 
 # AUTHENTICATION
 REST_FRAMEWORK = {
