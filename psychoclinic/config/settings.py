@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,8 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p8!map4u9(ymxokzwm_ortu-@+&1awksyxva@(*tkv#ad6)ln_'
-
+SECRET_KEY = '+dumc7&b5i8tru$gm$zn6wo#9%fwmgwmltj!yd2p_)uy118zxx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -41,11 +41,12 @@ DJANGO_APPS = [
 
 ANOTHER_APPS = [
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'corsheaders',
 ]
 
 LOCAL_APPS =[
+    'appointments.apps.AppointmentsConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -68,14 +69,14 @@ CORS_ORIGIN_ALLOW_ALL = True
 # AUTHENTICATION
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
 
-ROOT_URLCONF = 'psychoclinic.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -93,7 +94,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'psychoclinic.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -101,8 +102,12 @@ WSGI_APPLICATION = 'psychoclinic.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('MYSQL_DATABASE'),
+        'USER': config('MYSQL_USER'),
+        'PASSWORD': config('MYSQL_PASSWORD'),
+        'HOST': 'mysql-db',
+        'PORT': '3306',
     }
 }
 

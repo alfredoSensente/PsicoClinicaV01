@@ -6,4 +6,13 @@ services:
     volumes:
       - .:/app
     ports:
-     - '80:80'
+      - '8000:8000'
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql:latest
+    env_file:
+      - .env
+    ports:
+      - '3306:3306'
