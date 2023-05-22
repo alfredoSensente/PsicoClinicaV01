@@ -1,8 +1,14 @@
 """User URLS"""
 from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 from . import views
 
 urlpatterns = [
-    path('api-auth/', views.CustomObtainAuthToken.as_view()),
     path('patient-list/', views.PatientList.as_view()),
+    # JWT API
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
