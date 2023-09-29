@@ -69,15 +69,42 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Doctor(models.Model):
+    
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     # otros campos relacionados con el modelo Doctor
-
+    
+    class Meta:
+        db_table = 'doctor'
+        verbose_name = 'Doctor'
+        verbose_name_plural = 'Doctors'
+        
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
+    
 
 class Patient(models.Model):
+    
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     # otros campos relacionados con el modelo Patient
+    
+    class Meta:
+        db_table = 'patient'
+        verbose_name = 'Patient'
+        verbose_name_plural = 'Patients'
+    
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
 
 
 class Admin(models.Model):
+    
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     # otros campos relacionados con el modelo Admin
+    
+    class Meta:
+        db_table = 'admin'
+        verbose_name = 'Admin'
+        verbose_name_plural = 'Admins'
+    
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
